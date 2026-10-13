@@ -1,0 +1,29 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<main class="container">
+  <h1>Inventory Reports</h1>
+  <p class="muted">Stock adjustments submitted by sales representatives (restocks, damaged/lost items, corrections).</p>
+
+  <div class="card">
+    <% if (reports.length === 0) { %>
+      <p class="muted">No inventory reports submitted yet.</p>
+    <% } else { %>
+      <table class="table">
+        <thead><tr><th>Product</th><th>Type</th><th>Change</th><th>Note</th><th>Reported By</th><th>When</th></tr></thead>
+        <tbody>
+          <% reports.forEach(r => { %>
+            <tr class="<%= r.quantity_change < 0 ? 'row-warning' : '' %>">
+              <td><%= r.product_name %></td>
+              <td><%= r.type %></td>
+              <td><%= r.quantity_change > 0 ? '+' : '' %><%= r.quantity_change %></td>
+              <td><%= r.note || '—' %></td>
+              <td><%= r.reported_by %></td>
+              <td><%= r.created_at %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+</main>
+<%- include('../partials/foot') %>

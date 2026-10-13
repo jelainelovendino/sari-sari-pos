@@ -1,0 +1,29 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<main class="container">
+  <h1>Receipt <%= sale.receipt_no %></h1>
+  <div class="card">
+    <p><strong>Cashier:</strong> <%= sale.cashier %></p>
+    <p><strong>Date:</strong> <%= sale.created_at %></p>
+    <table class="table">
+      <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th></tr></thead>
+      <tbody>
+        <% items.forEach(i => { %>
+          <tr>
+            <td><%= i.product_name %></td>
+            <td><%= peso(i.unit_price) %></td>
+            <td><%= i.quantity %></td>
+            <td><%= peso(i.subtotal) %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="3">Total</td><td><%= peso(sale.total_amount) %></td></tr>
+        <tr><td colspan="3">Amount Paid</td><td><%= peso(sale.amount_paid) %></td></tr>
+        <tr><td colspan="3">Change</td><td><%= peso(sale.change_amount) %></td></tr>
+      </tfoot>
+    </table>
+    <a href="/admin/sales" class="btn btn-secondary">Back to Sales</a>
+  </div>
+</main>
+<%- include('../partials/foot') %>

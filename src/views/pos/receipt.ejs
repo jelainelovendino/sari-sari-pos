@@ -1,0 +1,32 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<main class="container">
+  <div class="card receipt">
+    <h1>Receipt</h1>
+    <p><strong>Receipt No:</strong> <%= sale.receipt_no %></p>
+    <p><strong>Date:</strong> <%= sale.created_at %></p>
+    <table class="table">
+      <thead><tr><th>Item</th><th>Price</th><th>Qty</th><th>Subtotal</th></tr></thead>
+      <tbody>
+        <% items.forEach(i => { %>
+          <tr>
+            <td><%= i.product_name %></td>
+            <td><%= peso(i.unit_price) %></td>
+            <td><%= i.quantity %></td>
+            <td><%= peso(i.subtotal) %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="3">Total</td><td><%= peso(sale.total_amount) %></td></tr>
+        <tr><td colspan="3">Amount Paid</td><td><%= peso(sale.amount_paid) %></td></tr>
+        <tr><td colspan="3">Change</td><td><%= peso(sale.change_amount) %></td></tr>
+      </tfoot>
+    </table>
+    <div class="receipt-actions">
+      <button onclick="window.print()" class="btn btn-secondary">Print</button>
+      <a href="/pos" class="btn btn-primary">New Sale</a>
+    </div>
+  </div>
+</main>
+<%- include('../partials/foot') %>

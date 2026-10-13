@@ -1,0 +1,45 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<main class="container">
+  <h1>Users</h1>
+
+  <div class="card">
+    <h2>Add User</h2>
+    <form method="POST" action="/admin/users" class="form-grid">
+      <label>Username <input type="text" name="username" required /></label>
+      <label>Full Name <input type="text" name="full_name" required /></label>
+      <label>Password <input type="password" name="password" required minlength="6" /></label>
+      <label>Role
+        <select name="role">
+          <option value="sales_rep">Sales Representative</option>
+          <option value="admin">Admin</option>
+        </select>
+      </label>
+      <button type="submit" class="btn btn-primary">Create User</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>All Users</h2>
+    <table class="table">
+      <thead><tr><th>Username</th><th>Full Name</th><th>Role</th><th>Status</th><th>Created</th><th></th></tr></thead>
+      <tbody>
+        <% users.forEach(u => { %>
+          <tr class="<%= !u.active ? 'row-muted' : '' %>">
+            <td><%= u.username %></td>
+            <td><%= u.full_name %></td>
+            <td><%= u.role === 'admin' ? 'Admin' : 'Sales Rep' %></td>
+            <td><%= u.active ? 'Active' : 'Inactive' %></td>
+            <td><%= u.created_at %></td>
+            <td>
+              <form method="POST" action="/admin/users/<%= u.id %>/toggle-active" class="inline-form">
+                <button type="submit" class="btn btn-small"><%= u.active ? 'Deactivate' : 'Activate' %></button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</main>
+<%- include('../partials/foot') %>

@@ -1,0 +1,27 @@
+{
+  "name": "sari-sari-pos",
+  "version": "1.0.0",
+  "description": "Point-of-sale system for a small sari-sari store with admin and sales-representative roles.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "seed": "node src/db/seed.js"
+  },
+  "license": "MIT",
+  "author": "rgrafia (SorSU)",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-session": "^2.1.1",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
