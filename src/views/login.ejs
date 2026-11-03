@@ -1,9 +1,9 @@
 <%- include('partials/head') %>
 <div class="login-page">
   <form method="POST" action="/login" class="login-card">
-    <img src="/images/logo.svg" alt="Barako Brew" class="login-logo" />
-    <h1 style="text-align: center;">Barako Brew POS</h1>
-    <p class="muted" style="text-align: center; margin: 0;">Sign in to continue</p>
+    <img src="/images/logo.jpg" alt="Barako Brew" class="login-logo" />
+    <h1>Barako Brew</h1>
+    <p class="muted" style="text-align: center; margin: 0;">Your coffee counter, ready to serve</p>
     <% if (flash && flash.error) { %><div class="alert alert-error"><%= flash.error %></div><% } %>
     <label>Username
       <input type="text" name="username" autofocus required />

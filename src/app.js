@@ -8,6 +8,7 @@ const flash = require('./middleware/flash');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const posRoutes = require('./routes/pos');
+const previewRoutes = require('./routes/preview');
 const helpers = require('./utils/helpers');
 
 const app = express();
@@ -39,6 +40,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', authRoutes);
+app.use('/preview', previewRoutes);
 app.use('/admin', requireAuth, adminRoutes);
 app.use('/pos', requireAuth, posRoutes);
 
@@ -55,7 +57,7 @@ app.use((err, req, res, next) => {
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
-    console.log(`Sari-sari POS running at http://localhost:${PORT}`);
+    console.log(`Barako Brew running at http://localhost:${PORT}`);
   });
 }
 
