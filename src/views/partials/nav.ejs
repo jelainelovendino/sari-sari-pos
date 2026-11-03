@@ -1,49 +1,31 @@
 <header class="topbar">
-  <div class="topbar-brand">🏪 Sari-Sari POS</div>
-  <nav class="topbar-nav">
-    <% if (currentUser && currentUser.role === 'admin') { %>
-      <a href="/admin/dashboard">Dashboard</a>
-      <a href="/admin/products">Products</a>
-      <a href="/admin/sales">Sales</a>
-      <a href="/admin/inventory-reports">Inventory Reports</a>
-      <a href="/admin/users">Users</a>
-    <% } else if (currentUser && currentUser.role === 'sales_rep') { %>
-      <a href="/pos">Point of Sale</a>
-      <a href="/pos/inventory">Inventory</a>
-    <% } %>
-  </nav>
-  <div class="topbar-user">
-    <% if (currentUser) { %>
-      <span><%= currentUser.fullName %> (<%= currentUser.role === 'admin' ? 'Admin' : 'Sales Rep' %>)</span>
-      <form method="POST" action="/logout" class="inline-form">
-        <button type="submit" class="link-button">Logout</button>
-      </form>
-    <% } %>
-  </div><header class="topbar">
-  <div class="topbar-brand"><img src="/images/logo.svg" alt="" class="brand-logo" /> Barako Brew POS</div>
-  <nav class="topbar-nav">
-    <% if (currentUser && currentUser.role === 'admin') { %>
-      <a href="/admin/dashboard">Dashboard</a>
-      <a href="/admin/products">Products</a>
-      <a href="/admin/sales">Sales</a>
-      <a href="/admin/inventory-reports">Inventory Reports</a>
-      <a href="/admin/users">Users</a>
-    <% } else if (currentUser && currentUser.role === 'sales_rep') { %>
-      <a href="/pos">Orders</a>
-      <a href="/pos/inventory">Inventory</a>
-    <% } %>
-  </nav>
-  <div class="topbar-user">
-    <% if (currentUser) { %>
-      <span><%= currentUser.fullName %> (<%= currentUser.role === 'admin' ? 'Admin' : 'Barista' %>)</span>
-      <form method="POST" action="/logout" class="inline-form">
-        <button type="submit" class="link-button">Logout</button>
-      </form>
-    <% } %>
+  <div class="topbar-inner">
+    <a class="topbar-brand" href="/">
+      <img src="/images/logo.jpg" alt="" class="brand-logo" />
+      <span><strong>Barako Brew</strong><small>COFFEE SHOP</small></span>
+    </a>
+    <nav class="topbar-nav" aria-label="Main navigation">
+      <% if (currentUser && currentUser.role === 'admin') { %>
+        <a href="<%= preview ? '/preview/dashboard' : '/admin/dashboard' %>">Dashboard</a>
+        <a href="<%= preview ? '/preview/products' : '/admin/products' %>">Products</a>
+        <a href="<%= preview ? '/preview/sales' : '/admin/sales' %>">Sales</a>
+        <a href="<%= preview ? '/preview/inventory-reports' : '/admin/inventory-reports' %>">Inventory</a>
+        <a href="<%= preview ? '/preview/users' : '/admin/users' %>">Users</a>
+      <% } else if (currentUser && currentUser.role === 'sales_rep') { %>
+        <a href="<%= preview ? '/preview/pos' : '/pos' %>">Point of Sale</a>
+        <a href="<%= preview ? '/preview/inventory' : '/pos/inventory' %>">Inventory</a>
+      <% } %>
+    </nav>
+    <div class="topbar-user">
+      <% if (currentUser) { %>
+        <div class="user-avatar"><%= currentUser.fullName.charAt(0).toUpperCase() %></div>
+        <span class="user-name"><%= currentUser.fullName %><small><%= currentUser.role === 'admin' ? 'Administrator' : 'Sales Rep' %></small></span>
+        <form method="POST" action="/logout" class="inline-form">
+          <button type="submit" class="link-button">Log out</button>
+        </form>
+      <% } %>
+    </div>
   </div>
-</header>
-<% if (flash && flash.success) { %><div class="alert alert-success"><%= flash.success %></div><% } %>
-<% if (flash && flash.error) { %><div class="alert alert-error"><%= flash.error %></div><% } %>
 </header>
 <% if (flash && flash.success) { %><div class="alert alert-success"><%= flash.success %></div><% } %>
 <% if (flash && flash.error) { %><div class="alert alert-error"><%= flash.error %></div><% } %>

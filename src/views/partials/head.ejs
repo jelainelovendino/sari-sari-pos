@@ -1,50 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <circle cx="50" cy="50" r="48" fill="#4b2e1e"/>
-  <circle cx="50" cy="50" r="42" fill="none" stroke="#c8923a" stroke-width="3"/>
-  <path d="M28 46h40v14a16 16 0 0 1-16 16h-8a16 16 0 0 1-16-16z" fill="#f7efe3"/>
-  <path d="M68 50h5a7 7 0 0 1 0 14h-6" fill="none" stroke="#f7efe3" stroke-width="5" stroke-linecap="round"/>
-  <path d="M40 38c-4-5 4-8 0-13M52 38c-4-5 4-8 0-13" fill="none" stroke="#c8923a" stroke-width="3" stroke-linecap="round"/>
-</svg>
-
-SVG namespace
-www.w3.org
-9:04 AM
-You sent
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= typeof title !== 'undefined' ? title + ' · Barako Brew POS' : 'Barako Brew POS' %></title>
-  <link rel="icon" href="/images/logo.svg" type="image/svg+xml" />
+  <title><%= typeof title !== 'undefined' ? title + ' · Barako Brew' : 'Barako Brew' %></title>
+  <link rel="icon" href="/images/logo.jpg" type="image/jpeg" />
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-You replied to yourself
-Head
-You sent
-<header class="topbar">
-  <div class="topbar-brand"><img src="/images/logo.svg" alt="" class="brand-logo" /> Barako Brew POS</div>
-  <nav class="topbar-nav">
-    <% if (currentUser && currentUser.role === 'admin') { %>
-      <a href="/admin/dashboard">Dashboard</a>
-      <a href="/admin/products">Products</a>
-      <a href="/admin/sales">Sales</a>
-      <a href="/admin/inventory-reports">Inventory Reports</a>
-      <a href="/admin/users">Users</a>
-    <% } else if (currentUser && currentUser.role === 'sales_rep') { %>
-      <a href="/pos">Orders</a>
-      <a href="/pos/inventory">Inventory</a>
-    <% } %>
-  </nav>
-  <div class="topbar-user">
-    <% if (currentUser) { %>
-      <span><%= currentUser.fullName %> (<%= currentUser.role === 'admin' ? 'Admin' : 'Barista' %>)</span>
-      <form method="POST" action="/logout" class="inline-form">
-        <button type="submit" class="link-button">Logout</button>
-      </form>
-    <% } %>
-  </div>
-</header>
-<% if (flash && flash.success) { %><div class="alert alert-success"><%= flash.success %></div><% } %>
-<% if (flash && flash.error) { %><div class="alert alert-error"><%= flash.error %></div><% } %>

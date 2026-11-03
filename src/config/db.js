@@ -9,21 +9,21 @@ types.setTypeParser(1700, (val) => (val === null ? null : parseFloat(val)));
 const connectionString =
   process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.POSTGRES_URL_NON_POOLING;
 
-if (!connectionString) {
-  throw new Error(
-    'No Postgres connection string found. Set POSTGRES_URL (or DATABASE_URL) in your environment — ' +
-      'e.g. via `vercel env pull` for a Vercel Postgres database, or a local Postgres instance for development.'
-  );
-}
-
-const pool = new Pool({
-  connectionString,
-  ssl: /localhost|127\.0\.0\.1/.test(connectionString) ? false : { rejectUnauthorized: false },
-});
+const pool = connectionString
+  ? new Pool({
+      connectionString,
+      ssl: /localhost|127\.0\.0\.1/.test(connectionString) ? false : { rejectUnauthorized: false },
+    })
+  : null;
 
 let schemaReady = null;
 
 function ensureSchema() {
+  if (!pool) {
+    throw new Error(
+      'No Postgres connection string found. Set POSTGRES_URL (or DATABASE_URL) to use database-backed pages.'
+    );
+  }
   if (!schemaReady) {
     const schema = fs.readFileSync(path.join(__dirname, '..', 'db', 'schema.sql'), 'utf8');
     schemaReady = pool.query(schema).catch((err) => {
