@@ -1,14 +1,16 @@
 :root {
-  --bg: #f4f6f8;
-  --card-bg: #ffffff;
-  --border: #e1e5ea;
-  --text: #1a202c;
-  --muted: #718096;
-  --primary: #2b6cb0;
-  --primary-dark: #1e4e7f;
+  --bg: #f7efe3;
+  --card-bg: #fffaf3;
+  --border: #e6d8c6;
+  --text: #3b2417;
+  --muted: #8a7260;
+  --primary: #2f6b4f;
+  --primary-dark: #22503b;
   --success: #2f855a;
   --danger: #c53030;
   --warning: #dd6b20;
+  --brown: #4b2e1e;
+  --gold: #c8923a;
 }
 
 * { box-sizing: border-box; }
@@ -29,20 +31,46 @@ a { color: var(--primary); }
   padding: 1.5rem;
 }
 
+/* ---------- Top bar ---------- */
 .topbar {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  background: var(--card-bg);
-  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  background: var(--brown);
+  color: #f7efe3;
+  border-bottom: 4px solid var(--gold);
   padding: 0.75rem 1.5rem;
 }
 
-.topbar-brand { font-weight: 700; font-size: 1.1rem; }
-.topbar-nav { display: flex; gap: 1rem; flex: 1; }
-.topbar-nav a { text-decoration: none; color: var(--text); font-weight: 500; }
-.topbar-nav a:hover { color: var(--primary); }
-.topbar-user { display: flex; align-items: center; gap: 0.75rem; color: var(--muted); font-size: 0.9rem; }
+.topbar-brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #f7efe3;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.topbar-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; flex: 1; }
+.topbar-nav a {
+  text-decoration: none;
+  color: #f7efe3;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.topbar-nav a:hover { color: var(--gold); }
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #e6d8c6;
+  font-size: 0.9rem;
+}
+.topbar .link-button { color: var(--gold); }
+
+.brand-logo { height: 30px; width: 30px; }
+.login-logo { display: block; margin: 0 auto 0.5rem; width: 80px; height: 80px; }
+.receipt-logo { display: block; margin: 0 auto 0.5rem; width: 64px; height: 64px; }
 
 .link-button {
   background: none;
@@ -60,6 +88,7 @@ a { color: var(--primary); }
 .alert-success { background: #e6fffa; color: var(--success); }
 .alert-error { background: #fff5f5; color: var(--danger); }
 
+/* ---------- Cards and layout ---------- */
 .card {
   background: var(--card-bg);
   border: 1px solid var(--border);
@@ -95,6 +124,7 @@ a { color: var(--primary); }
 .stat-value { font-size: 1.8rem; font-weight: 700; margin-top: 0.25rem; }
 .stat-sub { color: var(--muted); font-size: 0.85rem; margin-top: 0.25rem; }
 
+/* ---------- Tables ---------- */
 .table { width: 100%; border-collapse: collapse; }
 .table th, .table td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--border); }
 .table th { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; }
@@ -107,6 +137,7 @@ a { color: var(--primary); }
 .muted { color: var(--muted); }
 .text-danger { color: var(--danger) !important; }
 
+/* ---------- Forms ---------- */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -120,12 +151,18 @@ a { color: var(--primary); }
   color: var(--muted);
 }
 .form-grid input, .form-grid select,
-.login-card input,
+.login-card input, .login-card select,
 .form-inline input, .form-inline select {
   padding: 0.5rem;
   border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 0.95rem;
+  background: #fff;
+  color: var(--text);
+}
+input:focus, select:focus {
+  outline: 3px solid rgba(200, 146, 58, 0.45);
+  border-color: var(--gold);
 }
 .form-inline { display: flex; gap: 0.75rem; align-items: flex-end; flex-wrap: wrap; }
 .inline-form { display: inline; }
@@ -133,6 +170,7 @@ a { color: var(--primary); }
 .plain-list { list-style: none; padding: 0; margin: 0; }
 .plain-list li { padding: 0.25rem 0; border-bottom: 1px solid var(--border); }
 
+/* ---------- Buttons ---------- */
 .btn {
   display: inline-block;
   padding: 0.55rem 1.1rem;
@@ -146,17 +184,19 @@ a { color: var(--primary); }
 }
 .btn-primary { background: var(--primary); color: white; }
 .btn-primary:hover { background: var(--primary-dark); }
-.btn-secondary { background: #edf2f7; color: var(--text); }
+.btn-secondary { background: #efe4d3; color: var(--text); }
 .btn-small { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
 .btn-danger { background: #fed7d7; color: var(--danger); }
 .btn-block { width: 100%; }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+/* ---------- Login / register ---------- */
 .login-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
 }
 .login-card {
   background: var(--card-bg);
@@ -164,13 +204,14 @@ a { color: var(--primary); }
   border-radius: 10px;
   padding: 2rem;
   width: 320px;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 .login-card h1 { margin: 0; font-size: 1.3rem; }
 
-/* POS screen */
+/* ---------- POS screen ---------- */
 .pos-layout {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -187,6 +228,7 @@ a { color: var(--primary); }
   border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 1rem;
+  background: #fff;
 }
 .product-grid {
   display: grid;
@@ -203,8 +245,9 @@ a { color: var(--primary); }
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  color: var(--text);
 }
-.product-tile:hover { border-color: var(--primary); }
+.product-tile:hover { border-color: var(--gold); }
 .product-name { font-weight: 600; font-size: 0.9rem; }
 .product-price { color: var(--primary); font-weight: 600; }
 .product-stock { color: var(--muted); font-size: 0.75rem; }
@@ -239,10 +282,37 @@ a { color: var(--primary); }
   border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 1rem;
+  background: #fff;
 }
 
+/* Dine-in / Take-out */
+.order-type { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
+#checkoutForm .order-type label {
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  cursor: pointer;
+  background: #fff;
+}
+#checkoutForm .order-type input { padding: 0; }
+
+/* ---------- Receipt ---------- */
 .receipt { max-width: 500px; margin: 0 auto; }
 .receipt-actions { display: flex; gap: 0.75rem; margin-top: 1rem; }
+.queue-no {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0.5rem 0;
+}
 
 @media print {
   .topbar, .receipt-actions, .alert { display: none; }
