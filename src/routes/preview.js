@@ -27,6 +27,7 @@ const reports = [
 
 router.get('/', (req, res) => res.redirect('/preview/dashboard'));
 router.get('/dashboard', (req, res) => res.render('admin/dashboard', {
+  preview: true,
   title: 'Dashboard',
   todayTotal: { total: 12450, count: 18 },
   weekTotal: { total: 68420, count: 96 },
@@ -36,11 +37,11 @@ router.get('/dashboard', (req, res) => res.render('admin/dashboard', {
   lowStock: products.filter((p) => p.stock_quantity <= p.reorder_level),
   recentSales: [{ id: 1, receipt_no: 'SALE-00128', cashier: 'Juana Cruz', total_amount: 486, created_at: 'Today, 10:42 AM' }, { id: 2, receipt_no: 'SALE-00127', cashier: 'Mark Santos', total_amount: 220, created_at: 'Today, 10:18 AM' }],
 }));
-router.get('/products', (req, res) => res.render('admin/products', { title: 'Products', products, categories }));
-router.get('/sales', (req, res) => res.render('admin/sales', { title: 'Sales Transactions', from: '', to: '', sales: [{ id: 1, receipt_no: 'SALE-00128', cashier: 'Juana Cruz', total_amount: 486, amount_paid: 500, change_amount: 14, created_at: 'Today, 10:42 AM' }, { id: 2, receipt_no: 'SALE-00127', cashier: 'Mark Santos', total_amount: 220, amount_paid: 220, change_amount: 0, created_at: 'Today, 10:18 AM' }] }));
-router.get('/inventory-reports', (req, res) => res.render('admin/inventory_reports', { title: 'Inventory Reports', reports }));
-router.get('/users', (req, res) => res.render('admin/users', { title: 'Users', users: [{ id: 1, username: 'admin', full_name: 'Store Owner', role: 'admin', active: true, created_at: 'Nov 1, 2026' }, { id: 2, username: 'cashier1', full_name: 'Juana Cruz', role: 'sales_rep', active: true, created_at: 'Nov 1, 2026' }] }));
-router.get('/pos', (req, res) => res.render('pos/index', { title: 'Point of Sale', products }));
-router.get('/inventory', (req, res) => res.render('pos/inventory', { title: 'Inventory', products, myReports: reports }));
+router.get('/products', (req, res) => res.render('admin/products', { preview: true, title: 'Products', products, categories }));
+router.get('/sales', (req, res) => res.render('admin/sales', { preview: true, title: 'Sales Transactions', from: '', to: '', sales: [{ id: 1, receipt_no: 'SALE-00128', cashier: 'Juana Cruz', total_amount: 486, amount_paid: 500, change_amount: 14, created_at: 'Today, 10:42 AM' }, { id: 2, receipt_no: 'SALE-00127', cashier: 'Mark Santos', total_amount: 220, amount_paid: 220, change_amount: 0, created_at: 'Today, 10:18 AM' }] }));
+router.get('/inventory-reports', (req, res) => res.render('admin/inventory_reports', { preview: true, title: 'Inventory Reports', reports }));
+router.get('/users', (req, res) => res.render('admin/users', { preview: true, title: 'Users', users: [{ id: 1, username: 'admin', full_name: 'Store Owner', role: 'admin', active: true, created_at: 'Nov 1, 2026' }, { id: 2, username: 'cashier1', full_name: 'Juana Cruz', role: 'sales_rep', active: true, created_at: 'Nov 1, 2026' }] }));
+router.get('/pos', (req, res) => res.render('pos/index', { preview: true, title: 'Point of Sale', products }));
+router.get('/inventory', (req, res) => res.render('pos/inventory', { preview: true, title: 'Inventory', products, myReports: reports }));
 
 module.exports = router;

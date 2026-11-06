@@ -31,6 +31,12 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  res.locals.preview = false;
+  res.locals.currentUser = req.session?.user || null;
+  next();
+});
+
 app.use(flash);
 app.locals.peso = helpers.peso;
 
