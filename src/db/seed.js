@@ -35,16 +35,16 @@ async function main() {
   await upsertUser({ username: 'admin', password: 'admin123', fullName: 'Store Owner', role: 'admin' });
   await upsertUser({ username: 'cashier1', password: 'cashier123', fullName: 'Juana Cruz', role: 'sales_rep' });
 
-  const snacks = await upsertCategory('Snacks');
-  const beverages = await upsertCategory('Beverages');
-  const household = await upsertCategory('Household');
+  const coffee = await upsertCategory('Coffee');
+  const pastry = await upsertCategory('Pastry');
+  await upsertCategory('Drinks');
 
-  await upsertProduct({ name: 'Instant Noodles', barcode: '4800016641234', category_id: snacks, unit: 'pack', cost_price: 8, selling_price: 12, stock_quantity: 50, reorder_level: 10 });
-  await upsertProduct({ name: 'Canned Sardines', barcode: '4800016642345', category_id: snacks, unit: 'can', cost_price: 15, selling_price: 22, stock_quantity: 40, reorder_level: 10 });
-  await upsertProduct({ name: 'Soft Drinks 1.5L', barcode: '4800016643456', category_id: beverages, unit: 'bottle', cost_price: 45, selling_price: 65, stock_quantity: 24, reorder_level: 6 });
-  await upsertProduct({ name: 'Bottled Water 500mL', barcode: '4800016644567', category_id: beverages, unit: 'bottle', cost_price: 7, selling_price: 12, stock_quantity: 60, reorder_level: 12 });
-  await upsertProduct({ name: 'Laundry Soap Bar', barcode: '4800016645678', category_id: household, unit: 'pc', cost_price: 10, selling_price: 15, stock_quantity: 30, reorder_level: 8 });
-  await upsertProduct({ name: 'Cooking Oil 1L', barcode: '4800016646789', category_id: household, unit: 'bottle', cost_price: 60, selling_price: 80, stock_quantity: 15, reorder_level: 5 });
+  await upsertProduct({ name: 'Barako Brew', barcode: '4800016641234', category_id: coffee, unit: 'cup', cost_price: 35, selling_price: 95, stock_quantity: 50, reorder_level: 10 });
+  await upsertProduct({ name: 'Spanish Latte', barcode: '4800016642345', category_id: coffee, unit: 'cup', cost_price: 45, selling_price: 135, stock_quantity: 40, reorder_level: 10 });
+  await upsertProduct({ name: 'Caramel Macchiato', barcode: '4800016643456', category_id: coffee, unit: 'cup', cost_price: 48, selling_price: 150, stock_quantity: 24, reorder_level: 6 });
+  await upsertProduct({ name: 'Americano', barcode: '4800016644567', category_id: coffee, unit: 'cup', cost_price: 30, selling_price: 90, stock_quantity: 60, reorder_level: 12 });
+  await upsertProduct({ name: 'Butter Croissant', barcode: '4800016645678', category_id: pastry, unit: 'pc', cost_price: 35, selling_price: 85, stock_quantity: 30, reorder_level: 8 });
+  await upsertProduct({ name: 'Chocolate Muffin', barcode: '4800016646789', category_id: pastry, unit: 'pc', cost_price: 32, selling_price: 80, stock_quantity: 15, reorder_level: 5 });
 
   console.log('Seed complete.');
   await pool.end();

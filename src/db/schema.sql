@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS sales (
   total_amount NUMERIC(10, 2) NOT NULL,
   amount_paid NUMERIC(10, 2) NOT NULL,
   change_amount NUMERIC(10, 2) NOT NULL,
+  order_type TEXT NOT NULL DEFAULT 'dine_in' CHECK (order_type IN ('dine_in', 'take_out')),
+  queue_no INTEGER,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

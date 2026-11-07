@@ -27,7 +27,7 @@ async function searchProducts(req, res, next) {
   }
 }
 
-async function checkout(items, amountPaid, userId) {
+async function checkout(items, amountPaid, userId, orderType) {
   const client = await getClient();
   try {
     await client.query('BEGIN');
@@ -55,9 +55,16 @@ async function checkout(items, amountPaid, userId) {
     if (amountPaid < total) throw new Error('Amount paid is less than the total.');
 
     const receiptNo = generateReceiptNo();
+    await client.query('SELECT pg_advisory_xact_lock(42)');
+    const { rows: qrows } = await client.query(
+      `SELECT COALESCE(MAX(queue_no), 0) + 1 AS next FROM sales
+       WHERE (created_at AT TIME ZONE 'Asia/Manila')::date = (NOW() AT TIME ZONE 'Asia/Manila')::date`
+    );
+    const queueNo = qrows[0].next;
     const saleResult = await client.query(
-      'INSERT INTO sales (receipt_no, user_id, total_amount, amount_paid, change_amount) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-      [receiptNo, userId, total, amountPaid, amountPaid - total]
+      `INSERT INTO sales (receipt_no, user_id, total_amount, amount_paid, change_amount, order_type, queue_no)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+      [receiptNo, userId, total, amountPaid, amountPaid - total, orderType, queueNo]
     );
     const saleId = saleResult.rows[0].id;
 
@@ -86,7 +93,8 @@ async function postCheckout(req, res) {
   try {
     const items = JSON.parse(req.body.items || '[]');
     const amountPaid = Number(req.body.amount_paid);
-    const saleId = await checkout(items, amountPaid, req.session.user.id);
+    const orderType = req.body.order_type === 'take_out' ? 'take_out' : 'dine_in';
+    const saleId = await checkout(items, amountPaid, req.session.user.id, orderType);
     res.redirect(`/pos/receipt/${saleId}`);
   } catch (err) {
     setFlash(req, 'error', err.message);
