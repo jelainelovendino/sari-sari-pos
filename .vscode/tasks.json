@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Update receipt files",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"-e",
+				"const fs=require('fs'),path=require('path'); const root=process.cwd(); const receipt=String.raw`<%- include('../partials/head') %>\n<%- include('../partials/nav') %>\n<main class=\"container\">\n  <section class=\"card receipt-card\">\n    <div class=\"receipt-header\">\n      <h1>Barako Brew</h1>\n      <p class=\"muted\">Coffee Shop Receipt</p>\n    </div>\n    <div class=\"receipt-details\">\n      <div><strong>Receipt No.</strong><span><%= sale.receipt_no %></span></div>\n      <div><strong>Queue No.</strong><span><%= sale.queue_no %></span></div>\n      <div><strong>Order Type</strong><span><%= sale.order_type %></span></div>\n      <div><strong>Date</strong><span><%= new Date(sale.created_at).toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' }) %></span></div>\n      <div><strong>Cashier</strong><span><%= sale.cashier_name || 'Unknown' %></span></div>\n    </div>\n    <div class=\"table-scroll\">\n      <table class=\"table\">\n        <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr></thead>\n        <tbody>\n          <% items.forEach(item => { %>\n            <tr><td><%= item.product_name %></td><td><%= item.quantity %></td><td><%= peso(item.unit_price) %></td><td><%= peso(item.subtotal) %></td></tr>\n          <% }) %>\n        </tbody>\n      </table>\n    </div>\n    <div class=\"receipt-total\"><span>Total</span><strong><%= peso(sale.total_amount) %></strong></div>\n    <div class=\"receipt-summary\"><span>Amount Paid</span><span><%= peso(sale.amount_paid) %></span></div>\n    <div class=\"receipt-summary\"><span>Change</span><span><%= peso(sale.change_amount) %></span></div>\n    <a class=\"btn btn-primary btn-block\" href=\"/pos\">New Sale</a>\n  </section>\n</main>\n<%- include('../partials/foot') %>\n`; fs.writeFileSync(path.join(root,'src','views','pos','receipt.ejs'),receipt,'utf8'); const controllerPath=path.join(root,'src','controllers','posController.js'); let controller=fs.readFileSync(controllerPath,'utf8'); const old=\"    const { rows } = await query('SELECT * FROM sales WHERE id = $1', [req.params.id]);\"; const replacement=\"    const { rows } = await query(\\\"SELECT sales.*, users.full_name AS cashier_name FROM sales LEFT JOIN users ON users.id = sales.user_id WHERE sales.id = $1\\\", [req.params.id]);\"; if(!controller.includes(old)) throw new Error('Expected viewReceipt sale query was not found.'); fs.writeFileSync(controllerPath,controller.replace(old,replacement),'utf8'); console.log('Updated receipt.ejs and viewReceipt query.');"
+			],
+			"isBackground": false
+		}
+	]
+}

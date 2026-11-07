@@ -1,6 +1,7 @@
 <%- include('../partials/head') %>
 <%- include('../partials/nav') %>
 <main class="container">
+<<<<<<< Updated upstream
   <div class="card receipt">
     <h1>Receipt</h1>
     <p><strong>Receipt No:</strong> <%= sale.receipt_no %></p>
@@ -28,5 +29,34 @@
       <a href="/pos" class="btn btn-primary">New Sale</a>
     </div>
   </div>
+=======
+  <section class="card receipt-card">
+    <div class="receipt-header">
+      <h1>Barako Brew</h1>
+      <p class="muted">Coffee Shop Receipt</p>
+    </div>
+    <div class="receipt-details">
+      <div><strong>Receipt No.</strong><span><%= sale.receipt_no %></span></div>
+      <div><strong>Queue No.</strong><span><%= sale.queue_no %></span></div>
+      <div><strong>Order Type</strong><span><%= sale.order_type %></span></div>
+      <div><strong>Date</strong><span><%= new Date(sale.created_at).toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' }) %></span></div>
+      <div><strong>Cashier</strong><span><%= sale.cashier_name || 'Unknown' %></span></div>
+    </div>
+    <div class="table-scroll">
+      <table class="table">
+        <thead><tr><th>Item</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr></thead>
+        <tbody>
+          <% items.forEach(item => { %>
+            <tr><td><%= item.product_name %></td><td><%= item.quantity %></td><td><%= peso(item.unit_price) %></td><td><%= peso(item.subtotal) %></td></tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <div class="receipt-total"><span>Total</span><strong><%= peso(sale.total_amount) %></strong></div>
+    <div class="receipt-summary"><span>Amount Paid</span><span><%= peso(sale.amount_paid) %></span></div>
+    <div class="receipt-summary"><span>Change</span><span><%= peso(sale.change_amount) %></span></div>
+    <a class="btn btn-primary btn-block" href="/pos">New Sale</a>
+  </section>
+>>>>>>> Stashed changes
 </main>
 <%- include('../partials/foot') %>

@@ -96,7 +96,10 @@ async function postCheckout(req, res) {
 
 async function viewReceipt(req, res, next) {
   try {
-    const { rows } = await query('SELECT * FROM sales WHERE id = $1', [req.params.id]);
+    const { rows } = await query(
+      'SELECT sales.*, users.full_name AS cashier_name FROM sales LEFT JOIN users ON users.id = sales.user_id WHERE sales.id = $1',
+      [req.params.id]
+    );
     const sale = rows[0];
     if (!sale) return res.status(404).render('error', { title: 'Not Found', message: 'Receipt not found.' });
     const { rows: items } = await query('SELECT * FROM sale_items WHERE sale_id = $1', [sale.id]);
